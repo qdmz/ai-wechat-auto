@@ -1,0 +1,25 @@
+# 微信客户端层：ai-wechat-auto 容器（wxtest）。
+# 默认镜像是我们自己备份的第三方镜像副本：ghcr.io/qdmz/ai-wechat-auto-bin
+# 它是上游作者 caichengle666 的 ai-wechat-auto-bin 的原样备份（内容与上游一致，
+# 备份是为了上游镜像变动/不可用时仍能部署），本仓库不包含镜像的任何内容，
+# 只是通过 docker compose 引用它。
+# 可用标签：latest / 20261110（当前版）、v1.5.0（旧版）。
+# 若拉取备份镜像失败（例如网络或仓库权限问题），把下面 image 一行换成上游原地址
+# ghcr.io/caichengle666/ai-wechat-auto-bin:latest 即可，功能完全一致。
+# 数据卷 wxdata 存微信登录态与令牌：卷还在，重建容器不用重新扫码。
+services:
+  ai-wechat-auto:
+    image: ghcr.io/qdmz/ai-wechat-auto-bin:latest
+    container_name: ai-wechat-auto
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:18500:18500"   # 只绑本机回环；API、扫码页、控制面板都在这一个端口
+    volumes:
+      - wxdata:/data
+    # 可选环境变量（按需取消注释）：
+    # environment:
+    #   WX_SEND: "1"              # 1 可发消息 / 0 只读
+    #   WX_TUNNEL: "off"          # 已有自己的公网入口时关掉自带隧道
+
+volumes:
+  wxdata:

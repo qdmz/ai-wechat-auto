@@ -1,0 +1,22 @@
+# 本机数据与凭据：绝不进仓库
+settings.json
+awx.env
+store.db
+*.db
+hb.pid
+watch.lock
+.proxy.env
+.systemd_on
+.systemd_try
+.cron_on
+.boothook_try
+.skillpush.json
+*.muse-github-snapshot-sync.json
+
+# 运行产物
+*.log
+*.log.1
+inbox/
+img_cache/
+__pycache__/
+.bak/

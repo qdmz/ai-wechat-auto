@@ -1,0 +1,19 @@
+[Unit]
+Description=ai-wechat-auto watch loop (watch.py)
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+# 把 __INSTALL_DIR__ 换成本仓库克隆到的绝对路径，例如 /opt/muse-wechat
+WorkingDirectory=__INSTALL_DIR__
+ExecStart=/usr/bin/python3 __INSTALL_DIR__/watch.py
+Restart=always
+RestartSec=5
+TimeoutStopSec=20
+StandardOutput=append:__INSTALL_DIR__/watch.log
+StandardError=append:__INSTALL_DIR__/watch.log
+
+[Install]
+WantedBy=multi-user.target
